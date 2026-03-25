@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: hdcamp-backend
+
+  jpa:
+    open-in-view: false # Avoid lazy-loading pitfalls; fetch explicitly
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: false
+        jdbc:
+          time_zone: UTC
+
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+
+  thymeleaf:
+    cache: false
+
+app:
+  jwt:
+    public-key: classpath:app.pub
+    private-key: classpath:app.key
+    access-token-expiry-seconds: ${JWT_ACCESS_EXPIRY:900} # 15 minutes
+    refresh-token-expiry-seconds: ${JWT_REFRESH_EXPIRY:604800} # 7 days
+    issuer: ${JWT_ISSUER:http://localhost:8080}
+
+  oauth2:
+    providers:
+      google:
+        client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
+        client-secret: ${GOOGLE_OAUTH_CLIENT_SECRET:}
+        token-uri: https://oauth2.googleapis.com/token
+        user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+      github:
+        client-id: ${GITHUB_OAUTH_CLIENT_ID:}
+        client-secret: ${GITHUB_OAUTH_CLIENT_SECRET:}
+        token-uri: https://github.com/login/oauth/access_token
+        user-info-uri: https://api.github.com/user
+
+  storage:
+    provider: ${STORAGE_PROVIDER:minio} # minio | s3
+    bucket: ${STORAGE_BUCKET:hdcamp}
