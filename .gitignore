@@ -1,0 +1,7 @@
+.vscode/
+.DS_Store
+*.log
+*.env
+.github
+doc
+skills-lock.json
